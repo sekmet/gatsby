@@ -44,3 +44,25 @@ self.addEventListener(`message`, event => {
   const { gatsbyApi } = event.data
   if (gatsbyApi) messageApi[gatsbyApi](event, event.data)
 })
+
+// Another things
+self.addEventListener('push', function (e) {
+  var options = {
+    body: 'This notification was generated from a push!',
+    icon: '/assets/pic01.jpg',
+    vibrate: [100, 50, 100],
+    actions: [
+      {
+        action: 'explore', title: 'Explore',
+        icon: '/assets/checkmark.png'
+      },
+      {
+        action: 'close', title: 'Close',
+        icon: '/assets/xmark.png'
+      },
+    ]
+  };
+  e.waitUntil(
+    self.registration.showNotification('Hello world!', options)
+  );
+});
