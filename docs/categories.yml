@@ -14,6 +14,7 @@ starter:
   - CMS:Netlify
   - CMS:Wordpress
   - CMS:sanity.io
+  - CMS:Forestry.io
   - CMS:Other
   - Disqus
   - Documentation
@@ -21,6 +22,7 @@ starter:
   - Firebase
   - Gallery
   - Google Sheets
+  - Hasura
   - HTML5UP
   - i18n
   - Infinite Scroll
