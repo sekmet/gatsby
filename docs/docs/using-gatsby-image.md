@@ -37,7 +37,7 @@ This isn’t ideal. Optimized images should be easy and the default.
 
 ## Solution
 
-With Gatsby, we can make the experience of working with images way, way better.
+With Gatsby, you can make the experience of working with images way, way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images with minimal effort, you can:
 
@@ -74,34 +74,85 @@ module.exports = {
 }
 ```
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-install-gatsby-image-and-source-local-images-from-the-filesystem"
+  lessonTitle="Install gatsby-image and source local images from the filesystem"
+/>
+
 4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
 
-```graphql
-file(relativePath: { eq: "images/default.jpg" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        fluid {
-          ...GatsbyImageSharpFluid
+```jsx:title=src/pages/my-dogs.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby" // highlight-line
+import Layout from "../components/layout"
+
+export default () => {
+  // highlight-start
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
+    }
+  `)
+  // highlight-end
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+    </Layout>
+  )
 }
 ```
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-gatsby-image-with-an-image-from-a-relative-path"
+  lessonTitle="Use gatsby-image with an image from a relative path"
+/>
+
 5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
 
-```jsx
-import Img from "gatsby-image"
+```jsx:title=src/pages/my-dogs.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import Layout from "../components/layout"
+import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img
-      fluid={data.file.childImageSharp.fluid}
-      alt="Gatsby Docs are awesome"
-    />
-  </div>
-)
+export default () => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+      // highlight-start
+      <Img
+        fluid={data.file.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+    </Layout>
+  )
+}
 ```
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-gatsby-image-s-graphql-fragments-for-blurred-up-and-traced-svg-images"
+  lessonTitle="Use gatsby-image's GraphQL fragments for blurred-up and traced SVG images"
+/>
 
 This GraphQL query creates multiple sizes of the image and when the page is rendered the image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between) is used. The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
 
