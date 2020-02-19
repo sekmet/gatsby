@@ -104,13 +104,6 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
         name: `guidelines`,
         path: `${__dirname}/src/data/guidelines/`,
       },
@@ -163,7 +156,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -189,7 +187,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -209,6 +212,8 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          // convert images using http to https in plugin library READMEs
+          `gatsby-remark-http-to-https`
         ],
       },
     },
@@ -273,17 +278,16 @@ module.exports = {
                 ) {
                   edges {
                     node {
-                      excerpt
                       html
                       frontmatter {
                         title
                         date
-                        excerpt
                         author {
                           id
                         }
                       }
                       fields {
+                        excerpt
                         slug
                       }
                     }
@@ -309,7 +313,7 @@ module.exports = {
               allMdx.edges.map(({ node }) => {
                 return {
                   title: node.frontmatter.title,
-                  description: node.frontmatter.excerpt || node.excerpt,
+                  description: node.fields.excerpt,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
