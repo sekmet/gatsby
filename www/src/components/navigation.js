@@ -1,12 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import TwitterIcon from "react-icons/lib/fa/twitter"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import {
+  FaTwitter as TwitterIcon,
+  FaDiscord as DiscordIcon,
+} from "react-icons/fa"
 
 import Link from "./localized-link"
 import SearchForm from "./search-form"
-import DiscordIcon from "./discord"
 import logo from "../assets/logo.svg"
 import logoInverted from "../assets/logo-inverted.svg"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -79,6 +81,16 @@ const SocialNavItem = ({ href, title, children }) => (
     {children}
   </a>
 )
+
+const navItems = [
+  { id: `docs`, text: `Docs` },
+  { id: `tutorial`, text: `Tutorial` },
+  { id: `plugins`, text: `Plugins` },
+  { id: `features`, text: `Features` },
+  { id: `blog`, text: `Blog` },
+  { id: `showcase`, text: `Showcase` },
+  { id: `contributing`, text: `Contributing` },
+]
 
 const Navigation = ({ pathname }) => {
   const [colorMode] = useColorMode()
@@ -193,14 +205,11 @@ const Navigation = ({ pathname }) => {
               },
             }}
           >
-            <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
-            <NavItem linkTo="/plugins/">Plugins</NavItem>
-            <NavItem linkTo="/features/">Features</NavItem>
-            <NavItem linkTo="/blog/">Blog</NavItem>
-            <NavItem linkTo="/showcase/">Showcase</NavItem>
-            <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <NavItem linkTo="/starters/">Starters</NavItem> */}
+            {navItems.map(({ id, text }) => (
+              <NavItem key={id} linkTo={`/${id}/`}>
+                {text}
+              </NavItem>
+            ))}
           </ul>
         </nav>
         <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />
@@ -214,7 +223,7 @@ const Navigation = ({ pathname }) => {
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
           >
-            <GithubIcon style={{ verticalAlign: `middle` }} />
+            <GithubIcon />
           </SocialNavItem>
           <div
             sx={{
@@ -223,16 +232,10 @@ const Navigation = ({ pathname }) => {
             }}
           >
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
-              <TwitterIcon style={{ verticalAlign: `middle` }} />
+              <TwitterIcon />
             </SocialNavItem>
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon
-                overrideCSS={{
-                  verticalAlign: `middle`,
-                  position: `relative`,
-                  top: `0.05em`,
-                }}
-              />
+              <DiscordIcon />
             </SocialNavItem>
           </div>
           <div

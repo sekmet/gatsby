@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageSection from "./homepage-section"
 import EcosystemSection from "../ecosystem/ecosystem-section"
@@ -146,7 +146,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 const HomepageEcosystem = ({ featuredItems }) => (
   <HomepageSection
     sectionName="Ecosystem"
-    sectionIcon={EcosystemIcon}
+    sectionIcon={<EcosystemIcon />}
     title="Plugins & Starters"
     introduction="We have the tools to help you build for the web."
     links={[

@@ -348,6 +348,10 @@ const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
 export default Link
 ```
 
+### Relative links
+
+The `<Link />` component follows [the behavior of @reach/router](https://reach.tech/router/nesting) by ignoring trailing slashes and treating each page as if it were a directory when resolving relative links. For example if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`.
+
 ### File Downloads
 
 You can similarly check for file downloads:
@@ -388,6 +392,16 @@ onClick = () => {
   navigate('?foo=bar');
 }
 ```
+
+## Handling stale client-side pages
+
+Gatsby's `<Link>` component will only fetch each page's resources once. Updates to pages on the site are not reflected in the browser as they are effectively "locked in time". This can have the undesirable impact of different users having different views of the content.
+
+In order to prevent this staleness, Gatsby requests an additional resource on each new page load: `app-data.json`. This contains a hash generated when the site is built; if anything in the `src` directory changes, the hash will change. During page loads, if Gatsby sees a different hash in the `app-data.json` than the hash it initially retrieved when the site first loaded, the browser will navigate using `window.location`. The browser fetches the new page and starts over again, so any cached resources are lost.
+
+However, if the page has previously loaded, it will not re-request `app-data.json`. In that case, the hash comparison will not occur and the previously loaded content will be used.
+
+> **Note:** Any state will be lost during the `window.location` transition. This can have an impact if there is a reliance on state management, e.g. tracking state in [wrapPageElement](/docs/browser-apis/#wrapPageElement) or via a library like Redux.
 
 ## Additional resources
 

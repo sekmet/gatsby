@@ -80,7 +80,7 @@ blog, you can use the following plugins:
 
 with the following command:
 
-```bash
+```shell
 yarn add gatsby-plugin-catch-links gatsby-plugin-react-helmet
 ```
 
@@ -122,7 +122,7 @@ Markdown, let's add that [`gatsby-source-filesystem`][gatsby-source-filesystem]
 plugin. Similarly to the previous step, install the plugin and then inject
 into your `gatsby-config.js`, like so:
 
-```bash
+```shell
 yarn add gatsby-source-filesystem
 ```
 
@@ -173,7 +173,7 @@ installed.
 
 The process should be familiar by now, install and then add to config.
 
-```bash
+```shell
 yarn add gatsby-transformer-remark
 ```
 
@@ -647,7 +647,7 @@ Now go build something great.
     (previous link), and expands upon it with a bunch of features and some more
     advanced functionality
 
-[react-dom-server]: https://facebook.github.io/react/docs/react-dom-server.html
+[react-dom-server]: https://reactjs.org/docs/react-dom-server.html
 [gatsby-release]: /blog/gatsby-v1/
 [gatsby-plugins]: /docs/plugins/
 [gatsby-plugin-catch-links]: /packages/gatsby-plugin-catch-links/

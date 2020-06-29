@@ -13,7 +13,7 @@ import { Global } from "@emotion/core"
 
 import algoliaStyles from "./algolia-styles"
 
-export default function SearchForm() {
+function SearchForm() {
   const [focused, setFocus] = React.useState(false)
   const [isInit, setInit] = React.useState(false)
   const searchInput = React.useRef(null)
@@ -68,6 +68,7 @@ export default function SearchForm() {
           keyboardShortcuts: [`s`],
         },
       })
+      searchInput.current.focus()
     }
 
     return () => {
@@ -116,6 +117,7 @@ export default function SearchForm() {
       className="searchWrap"
       onMouseOver={() => loadAlgoliaJS()}
       onClick={() => loadAlgoliaJS()}
+      onFocus={() => loadAlgoliaJS()}
       onSubmit={e => e.preventDefault()}
     >
       <Global styles={algoliaStyles} />
@@ -144,7 +146,7 @@ export default function SearchForm() {
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
           type="search"
-          placeholder={`Search gatsbyjs.org`}
+          placeholder="Search gatsbyjs.org"
           aria-label="Search gatsbyjs.org"
           title="Hit 's' to search docs"
           onFocus={() => setFocus(true)}
@@ -156,3 +158,5 @@ export default function SearchForm() {
     </form>
   )
 }
+
+export default SearchForm

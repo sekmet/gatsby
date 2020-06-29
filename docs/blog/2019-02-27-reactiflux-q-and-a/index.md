@@ -13,7 +13,7 @@ Date of interview: December 13 2018
 
 **Q:** How do you see the future of Browser-apps/PWA in comparison to "old2 executables" on windows? — spYro
 
-**A:** I think the future of browser apps is bright :smiley: more and more software (particularly business software) is delivered over the web (or Electron for desktop apps). Web developer tooling and browsers get an incredible amounts of investment and most people find building with html/css/js much nicer than the equivalent native UI toolkits. So I expect the strong trend to deliver applications over the internet or through Electron-like solutions to continue.
+**A:** I think the future of browser apps is bright :smiley: more and more software (particularly business software) is delivered over the web (or Electron for desktop apps). Web developer tooling and browsers get an incredible amounts of investment and most people find building with HTML/CSS/JS much nicer than the equivalent native UI toolkits. So I expect the strong trend to deliver applications over the internet or through Electron-like solutions to continue.
 
 — kylemathews
 
@@ -29,13 +29,13 @@ Date of interview: December 13 2018
 
 **Q:** Any plans for custom hooks in Gatsby? — alexanderson1993
 
-**A:** No plans just yet for custom hooks — most of our efforts with Gatsby are making integrations with custom data services (CMSs, ecommerce, etc.) really smooth along with making builds super scalable and fast — React hooks are an amazing improvement for client-side React code but not sure yet if there's any hooks we'd want to build ourselves.
+**A:** No plans just yet for custom hooks — most of our efforts with Gatsby are making integrations with custom data services (CMSs, e-commerce, etc.) really smooth along with making builds super scalable and fast — React hooks are an amazing improvement for client-side React code but not sure yet if there's any hooks we'd want to build ourselves.
 
 — kylemathews
 
 ---
 
-**Q:** When would I choose gatsby over next js — f_youngblood
+**Q:** When would I choose gatsby over NextJS — f_youngblood
 
 **A:** Gatsby and Next are similar in many respects, but Gatsby is hyper-focused on baking performance in by default and in the ecosystem with approaches like the offline-plugin, etc. Personally I'd default to starting with gatsby and move to next only if I couldn't find a way to prerender my SEO critical applications.
 
@@ -117,7 +117,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** As a jaded javascripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
+**Q:** As a jaded JavaScripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
 
 **A:** From a technical perspective, Gatsby has a powerful approach to managing data and a performance sensitive mindset. This means that you get to spend less time "making sure the site is performant" and more time building your product.
 
@@ -171,7 +171,7 @@ Check it out, and hope it's helpful!
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
-**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, ecommerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
+**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, e-commerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi).
 
 A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by creating an account on GitHub.
 

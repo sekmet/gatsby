@@ -16,7 +16,7 @@ This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages
 
 Install it:
 
-```bash
+```shell
 npm install --save @pasdo501/gatsby-source-woocommerce
 ```
 
@@ -26,7 +26,7 @@ Configure its options:
 {
   resolve: "@pasdo501/gatsby-source-woocommerce",
   options: {
-    // Base URL of Wordpress site
+    // Base URL of WordPress site
     api: 'wordpress.domain',
     // true if using https. false otherwise.
     https: false,

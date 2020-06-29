@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.7...gatsby-design-tokens@2.0.8) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.6...gatsby-design-tokens@2.0.7) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.5...gatsby-design-tokens@2.0.6) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.4...gatsby-design-tokens@2.0.5) (2020-04-18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.3...gatsby-design-tokens@2.0.4) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.2...gatsby-design-tokens@2.0.3) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.1...gatsby-design-tokens@2.0.2) (2020-02-20)
 
 ### Features
@@ -30,7 +56,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Tokens
 
-This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).  
+This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).
+
 We currently only consume these tokens in the context of CSS, so let's make things a bit easier there:
 
 - `fontsSizes` exports `rem` values now; old values available at `fontSizesRaw`
