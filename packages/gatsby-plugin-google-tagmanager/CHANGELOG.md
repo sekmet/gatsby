@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.13...gatsby-plugin-google-tagmanager@2.3.14) (2020-10-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-tagmanager:** Add "aria-hidden" ([#27062](https://github.com/gatsbyjs/gatsby/issues/27062)) ([0ecba23](https://github.com/gatsbyjs/gatsby/commit/0ecba231f37a76255333cc9846bcd5b392394ce0))
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.12...gatsby-plugin-google-tagmanager@2.3.13) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.11...gatsby-plugin-google-tagmanager@2.3.12) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.10...gatsby-plugin-google-tagmanager@2.3.11) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.9...gatsby-plugin-google-tagmanager@2.3.10) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.8...gatsby-plugin-google-tagmanager@2.3.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.7...gatsby-plugin-google-tagmanager@2.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
 ## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.3.6...gatsby-plugin-google-tagmanager@2.3.7) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-plugin-google-tagmanager
