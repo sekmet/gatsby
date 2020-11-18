@@ -1,7 +1,7 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
+import { slash, isCI } from "gatsby-core-utils"
 import fs from "fs-extra"
-import md5File from "md5-file/promise"
+import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
 import path from "path"
@@ -9,6 +9,8 @@ import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
+import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
+import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
@@ -28,6 +30,31 @@ import { IBuildContext } from "./types"
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions
+}
+
+if (
+  process.env.gatsby_executing_command === `develop` &&
+  !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
+  !isCI() &&
+  sampleSiteForExperiment(`DEV_SSR`, 1)
+) {
+  showExperimentNoticeAfterTimeout(
+    `devSSR`,
+    `
+Your dev experience is about to get better, faster, and stronger!
+
+We'll soon be shipping support for SSR in development.
+
+This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
+
+Try out develop SSR *today* by running your site with it enabled:
+
+GATSBY_EXPERIMENT_DEV_SSR=true gatsby develop
+
+Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
+      `,
+    1 // Show this immediately to the subset of sites selected.
+  )
 }
 
 // Show stack trace on unhandled promises.
@@ -162,6 +189,25 @@ export async function initialize({
 
   activity.end()
 
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.gatsby_executing_command !== `develop`) {
+      // we don't want to ever have this flag enabled for anything than develop
+      // in case someone have this env var globally set
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    } else if (isCI()) {
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      reporter.warn(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
+      )
+    } else {
+      reporter.info(`Using experimental Query on Demand feature`)
+      telemetry.trackFeatureIsUsed(`QueryOnDemand`)
+    }
+  }
+  if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
+    telemetry.trackFeatureIsUsed(`ExperimentalDevSSR`)
+  }
+
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
@@ -226,15 +272,11 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes = await Promise.all([
+  const hashes: any = await Promise.all([
     !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
-    ), // ignore as this file isn't required),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
-    ), // ignore as this file isn't required),
+    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
+    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
@@ -255,7 +297,22 @@ export async function initialize({
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+  const publicDirectory = `${program.directory}/public`
+
+  // .cache directory exists in develop at this point
+  // so checking for .cache/json as a heuristic (could be any expected file)
+  const cacheIsCorrupt =
+    fs.existsSync(`${cacheDirectory}/json`) && !fs.existsSync(publicDirectory)
+
+  if (cacheIsCorrupt) {
+    reporter.info(reporter.stripIndent`
+      We've detected that the Gatsby cache is incomplete (the .cache directory exists
+      but the public directory does not). As a precaution, we're deleting your site's
+      cache to ensure there's no stale data.
+    `)
+  }
+
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
       // Attempt to empty dir if remove fails,
       // like when directory is mount point
@@ -267,6 +324,7 @@ export async function initialize({
     // been loaded from the file system cache).
     store.dispatch({
       type: `DELETE_CACHE`,
+      cacheIsCorrupt,
     })
 
     // in future this should show which plugin's caches are purged
@@ -290,7 +348,7 @@ export async function initialize({
   await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
+  await fs.ensureDir(`${publicDirectory}/static`)
 
   activity.end()
 
