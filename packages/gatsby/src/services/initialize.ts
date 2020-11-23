@@ -32,11 +32,35 @@ interface IPluginResolution {
   options: IPluginInfoOptions
 }
 
+// If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
+// all DEV experimental changes (but only during development & not on CI).
+if (
+  process.env.gatsby_executing_command === `develop` &&
+  process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
+  !isCI()
+) {
+  process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS = `true`
+  process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+  process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
+
+  reporter.info(`
+Three fast dev experiments are enabled, Lazy Bundling, Query on Demand, and Development SSR.
+
+Please give feedback on their respective umbrella issues!
+
+- https://gatsby.dev/lazy-devjs-umbrella
+- https://gatsby.dev/query-on-demand-feedback
+- https://gatsby.dev/dev-ssr-feedback
+  `)
+
+  telemetry.trackFeatureIsUsed(`FastDev`)
+}
+
 if (
   process.env.gatsby_executing_command === `develop` &&
   !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
   !isCI() &&
-  sampleSiteForExperiment(`DEV_SSR`, 1)
+  sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
     `devSSR`,
@@ -49,7 +73,7 @@ This will help the dev environment more closely mimic builds so you'll catch bui
 
 Try out develop SSR *today* by running your site with it enabled:
 
-GATSBY_EXPERIMENT_DEV_SSR=true gatsby develop
+GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop
 
 Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
       `,
@@ -200,12 +224,16 @@ export async function initialize({
         `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
       )
     } else {
-      reporter.info(`Using experimental Query on Demand feature`)
+      // We already show a notice for this flag.
+      if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
+        reporter.info(`Using experimental Query on Demand feature`)
+      }
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
+
   if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-    telemetry.trackFeatureIsUsed(`ExperimentalDevSSR`)
+    telemetry.trackFeatureIsUsed(`ExperimentalLazyDevjs`)
   }
 
   // run stale jobs
